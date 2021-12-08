@@ -20,11 +20,6 @@ type Digit struct {
 	a, b, c, d, e, f, g bool
 }
 
-type Entry struct {
-	digits []Digit
-	output []Digit
-}
-
 func convertDigitStringToDigit(digitStr string) Digit {
 	digit := Digit{}
 	for _, c := range digitStr {
