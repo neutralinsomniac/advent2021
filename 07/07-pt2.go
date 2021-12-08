@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -61,8 +60,6 @@ func main() {
 			max = v
 		}
 	}
-
-	sort.Ints(crabs)
 
 	bestFuel := int(^uint(0) >> 1) // max int
 	for pos := min; pos < max; pos++ {
