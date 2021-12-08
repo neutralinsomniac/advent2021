@@ -224,10 +224,8 @@ func main() {
 
 		/* now calculate the output */
 		outputs := strings.Fields(sp[1])
-		/* process the 4 digits */
 		val := 0
 		for x, digitStr := range outputs {
-			/* 1000 / math.Pow(10, (x+1)) */
 			digit := convertDigitStringToDigit(digitStr)
 			val += (int(math.Pow(10, float64(3-x)))) * digitMap[digit]
 		}
