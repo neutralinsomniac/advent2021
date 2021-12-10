@@ -28,39 +28,18 @@ func getAdjacentsToConsider(world World, coord Coord) []Coord {
 	adjacents := make([]Coord, 0)
 	x := coord.x
 	y := coord.y
-	/* up */
-	if adj, ok := world[Coord{x + 1, y}]; ok {
-		if adj != 9 {
-			if _, ok := alreadyCounted[Coord{x + 1, y}]; !ok {
-				adjacents = append(adjacents, Coord{x + 1, y})
-				alreadyCounted[Coord{x + 1, y}] = true
-			}
-		}
-	}
-	/* down */
-	if adj, ok := world[Coord{x - 1, y}]; ok {
-		if adj != 9 {
-			if _, ok := alreadyCounted[Coord{x - 1, y}]; !ok {
-				adjacents = append(adjacents, Coord{x - 1, y})
-				alreadyCounted[Coord{x - 1, y}] = true
-			}
-		}
-	}
-	/* right */
-	if adj, ok := world[Coord{x, y + 1}]; ok {
-		if adj != 9 {
-			if _, ok := alreadyCounted[Coord{x, y + 1}]; !ok {
-				adjacents = append(adjacents, Coord{x, y + 1})
-				alreadyCounted[Coord{x, y + 1}] = true
-			}
-		}
-	}
-	/* left */
-	if adj, ok := world[Coord{x, y - 1}]; ok {
-		if adj != 9 {
-			if _, ok := alreadyCounted[Coord{x, y - 1}]; !ok {
-				adjacents = append(adjacents, Coord{x, y - 1})
-				alreadyCounted[Coord{x, y - 1}] = true
+
+	neighbors := [...]Coord{Coord{x + 1, y}, Coord{x - 1, y}, Coord{x, y + 1}, Coord{x, y - 1}}
+
+	/* check up/down/left/right */
+	for _, neighbor := range neighbors {
+		neighbor := neighbor
+		if adj, ok := world[neighbor]; ok {
+			if adj != 9 {
+				if _, ok := alreadyCounted[neighbor]; !ok {
+					adjacents = append(adjacents, neighbor)
+					alreadyCounted[neighbor] = true
+				}
 			}
 		}
 	}
@@ -90,6 +69,7 @@ func main() {
 			coord := Coord{x, y}
 			world[coord], _ = strconv.Atoi(string(row[y]))
 		}
+
 		x += 1
 	}
 
@@ -117,7 +97,6 @@ func main() {
 
 	Parse:
 		adjacents := getAdjacentsToConsider(world, coordToConsider)
-		/* remove these from the world */
 		for len(adjacents) > 0 {
 			adj := adjacents[0]
 			basinSize += 1
